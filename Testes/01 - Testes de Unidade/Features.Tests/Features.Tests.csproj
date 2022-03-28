@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="03 - Order\" />
-    <Folder Include="07 - FluentAssertions\" />
     <Folder Include="09 - Code Coverage\" />
   </ItemGroup>
 
