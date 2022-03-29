@@ -55,7 +55,7 @@ namespace Features.Tests
             result.Should().BeFalse();
             cliente.ValidationResult.Errors.Should().HaveCountGreaterOrEqualTo(1, "must have validation errorrs");
 
-            _outputHelper.WriteLine($"Were found {cliente.ValidationResult.Errors.Count} in this validation");
+            _outputHelper.WriteLine($"Were found {cliente.ValidationResult.Errors.Count} errors in this validation");
         }
     }
 }
