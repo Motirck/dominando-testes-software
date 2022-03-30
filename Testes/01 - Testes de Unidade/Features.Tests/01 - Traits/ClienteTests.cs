@@ -7,7 +7,7 @@ namespace Features.Tests;
 public class ClienteTests
 {
     [Fact(DisplayName = "Novo Cliente Válido")]
-    [Trait("Categoria", "Categoria Trait Tests")]
+    [Trait("Categoria", "Cliente Trait Tests")]
     public void Cliente_NovoCliente_DeveEstarValido()
     {
         // Arrange
@@ -29,7 +29,7 @@ public class ClienteTests
     }
 
     [Fact(DisplayName = "Novo Cliente Inválido")]
-    [Trait("Categoria", "Categoria Trait Tests")]
+    [Trait("Categoria", "Cliente Trait Tests")]
     public void Cliente_NovoCliente_DeveEstarInvalido()
     {
         // Arrange
