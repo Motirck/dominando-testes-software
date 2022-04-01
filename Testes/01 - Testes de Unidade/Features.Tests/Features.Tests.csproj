@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="03 - Order\" />
-    <Folder Include="09 - Code Coverage\" />
   </ItemGroup>
 
 </Project>
