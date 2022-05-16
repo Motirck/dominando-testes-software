@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NerdStore.Core.Data;
 using NerdStore.Vendas.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Data.Repository
 {

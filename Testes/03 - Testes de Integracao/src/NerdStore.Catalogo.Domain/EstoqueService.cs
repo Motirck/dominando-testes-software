@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 
 namespace NerdStore.Catalogo.Domain

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace NerdStore.Catalogo.Domain
+﻿namespace NerdStore.Catalogo.Domain
 {
     public interface IEstoqueService : IDisposable
     {
