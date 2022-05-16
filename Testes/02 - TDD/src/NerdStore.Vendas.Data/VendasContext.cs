@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using NerdStore.Core.Data;
 using NerdStore.Core.Messages;
 using NerdStore.Vendas.Domain;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 
 namespace NerdStore.Vendas.Data

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NerdStore.Vendas.Application.Queries.ViewModels
+﻿namespace NerdStore.Vendas.Application.Queries.ViewModels
 {
     public class PedidoViewModel
     {

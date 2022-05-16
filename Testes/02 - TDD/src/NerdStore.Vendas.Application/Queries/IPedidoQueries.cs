@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using NerdStore.Vendas.Application.Queries.ViewModels;
+﻿using NerdStore.Vendas.Application.Queries.ViewModels;
 
 namespace NerdStore.Vendas.Application.Queries
 {

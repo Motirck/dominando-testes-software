@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NerdStore.Vendas.Application.Queries.ViewModels
+﻿namespace NerdStore.Vendas.Application.Queries.ViewModels
 {
     public class CarrinhoViewModel
     {

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Vendas.Data
