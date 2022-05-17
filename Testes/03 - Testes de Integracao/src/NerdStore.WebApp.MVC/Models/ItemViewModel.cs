@@ -1,3 +1,5 @@
+using System;
+
 namespace NerdStore.WebApp.MVC.Models
 {
     public class ItemViewModel
