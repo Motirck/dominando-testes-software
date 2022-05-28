@@ -1,6 +1,6 @@
 # Dominando os Testes de Doftware 👨‍💻
 
-TDD, BDD, Automatizar testes com Selenium, testar sua aplicação de ponta a ponta com o mínimo esforço necessário.
+TDD, BDD, Automatização de testes com Selenium, teste de aplicação ponta a ponta com o mínimo esforço necessário.
 
 ## Comandos úteis
 
