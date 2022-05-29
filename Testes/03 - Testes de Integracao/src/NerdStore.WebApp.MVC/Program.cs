@@ -53,6 +53,21 @@ builder.Services.AddCors(setup =>
 
 builder.Services.AddSwaggerGen(options =>
 {
+    var jwtSecurityScheme = new OpenApiSecurityScheme
+    {
+        Description = "Insira o token JWT desta maneira: Bearer {seu token}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    };
+    options.AddSecurityDefinition("Bearer", jwtSecurityScheme);
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { jwtSecurityScheme, Array.Empty<string>() }
+    });
+        
     options.SwaggerDoc(apiVersion, new OpenApiInfo { Title = apiName, Version = apiVersion, Description = apiDescription });
 
     /* Due to the need to put a description in each property of the "Request / Dto" classes used in the [FromQuery] of the endpoints, 
