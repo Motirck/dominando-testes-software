@@ -1,6 +1,6 @@
 # Dominando os Testes de Doftware 👨‍💻
 
-TDD, BDD, Automatização de testes com Selenium, teste de aplicação ponta a ponta com o mínimo esforço necessário.
+TDD, BDD, Automatizar testes com Selenium, testar sua aplicação de ponta a ponta com o mínimo esforço necessário.
 
 ## Comandos úteis
 
@@ -19,5 +19,7 @@ TDD, BDD, Automatização de testes com Selenium, teste de aplicação ponta a p
         
     }
 ```
+## Créditos
 
+Projeto criado do zero por mim Motirck, com base no curso Dominando os Testes de Software oferecido pela plataforma [Desenvolvedor.io](https://desenvolvedor.io/). Super recomendo, deem uma olhada. 🚀
 
