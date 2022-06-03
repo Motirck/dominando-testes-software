@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using NerdStore.WebApp.MVC;
 using System;
 using System.Net.Http;
 using Xunit;
@@ -7,13 +8,13 @@ using Xunit;
 namespace NerdStore.WebApp.Tests.Config
 {
     [CollectionDefinition(nameof(IntegrationWebTestsFixtureCollection))]
-    public class IntegrationWebTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<Program>>
+    public class IntegrationWebTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupWebTests>>
     {
 
     }
 
     [CollectionDefinition(nameof(IntegrationApiTestsFixtureCollection))]
-    public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<Program>>
+    public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupApiTests>>
     {
 
     }

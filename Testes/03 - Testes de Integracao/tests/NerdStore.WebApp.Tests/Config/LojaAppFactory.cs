@@ -11,9 +11,6 @@ namespace NerdStore.WebApp.Tests.Config
             
             // Aqui é onde o ambinte utilizado será o appsettings.Testing, que terá um banco so pra testes e configurações especificas
             builder.UseEnvironment("Testing");
-
-
-
         }
     }
 }
