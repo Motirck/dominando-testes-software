@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using NerdStore.WebApp.MVC;
 using System;
 using System.Net.Http;
 using Xunit;
@@ -7,20 +8,20 @@ using Xunit;
 namespace NerdStore.WebApp.Tests.Config
 {
     [CollectionDefinition(nameof(IntegrationWebTestsFixtureCollection))]
-    public class IntegrationWebTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<Program>>
+    public class IntegrationWebTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupWebTests>>
     {
 
     }
 
     [CollectionDefinition(nameof(IntegrationApiTestsFixtureCollection))]
-    public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<Program>>
+    public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupApiTests>>
     {
 
     }
 
-    public class IntegrationTestsFixture<TProgram> : IDisposable where TProgram : class
+    public class IntegrationTestsFixture<TStartup> : IDisposable where TStartup : class
     {
-        public readonly LojaAppFactory<TProgram> Factory;
+        public readonly LojaAppFactory<TStartup> Factory;
         public HttpClient Client;
 
         public IntegrationTestsFixture()
@@ -30,7 +31,7 @@ namespace NerdStore.WebApp.Tests.Config
 
             };
 
-            Factory = new LojaAppFactory<TProgram>();
+            Factory = new LojaAppFactory<TStartup>();
             Client = Factory.CreateClient(clientOptions);
         }
         public void Dispose()
