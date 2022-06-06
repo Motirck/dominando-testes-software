@@ -1,31 +1,41 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.Catalogo.Data;
 using NerdStore.Vendas.Data;
 using NerdStore.WebApp.MVC.Data;
+using NerdStore.WebApp.MVC.Models;
 using NerdStore.WebApp.MVC.Security;
 using NerdStore.WebApp.MVC.Setup;
+using System.Text;
 
 namespace NerdStore.WebApp.MVC
 {
     public class StartupWebTests : IStartup
     {
+        public IConfiguration Configuration { get; }
         private readonly string _apiName;
         private readonly string _apiDescription;
         private readonly string _apiVersion;
 
-        public StartupWebTests(IConfiguration configuration)
+        public StartupWebTests(IWebHostEnvironment hostEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
+
             _apiName = Configuration["ApiName"];
             _apiDescription = Configuration["ApiDescription"];
             _apiVersion = Configuration["ApiVersion"];
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -50,8 +60,10 @@ namespace NerdStore.WebApp.MVC
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentityCore<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddMvcCore().AddRazorViewEngine();
             //services.AddMvc();
 
             services.AddHttpContextAccessor();
@@ -60,37 +72,9 @@ namespace NerdStore.WebApp.MVC
 
             services.AddMediatR(typeof(Startup));
 
-            services.RegisterServices();
-
             services.AddCors(setup =>
             {
                 setup.AddPolicy(AllowWhitelistCorsPolicy.Name, AllowWhitelistCorsPolicy.Get(Configuration["CorsWhitelist"].Split(',')));
-            });
-
-            services.AddSwaggerGen(options =>
-            {
-                var jwtSecurityScheme = new OpenApiSecurityScheme
-                {
-                    Description = "Insira o token JWT desta maneira: Bearer {seu token}",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                };
-                options.AddSecurityDefinition("Bearer", jwtSecurityScheme);
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    { jwtSecurityScheme, Array.Empty<string>() }
-                });
-
-                options.SwaggerDoc(_apiVersion, new OpenApiInfo { Title = _apiName, Version = _apiVersion, Description = _apiDescription });
-
-                /* Due to the need to put a description in each property of the "Request / Dto" classes used in the [FromQuery] of the endpoints, 
-                 * the implementation below was necessary, where through forEach the inclusion of all XML files is performed. 
-                 * (Microsoft's official documentation only explains how to do it for one XML file) */
-                List<string> xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly).ToList();
-                xmlFiles.ForEach(xmlFile => options.IncludeXmlComments(xmlFile));
             });
 
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
