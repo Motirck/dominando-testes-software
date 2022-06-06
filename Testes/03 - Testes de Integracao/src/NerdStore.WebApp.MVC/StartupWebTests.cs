@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +14,7 @@ using System.Text;
 
 namespace NerdStore.WebApp.MVC
 {
-    public class StartupWebTests : IStartup
+    public class StartupWebTests
     {
         public IConfiguration Configuration { get; }
         private readonly string _apiName;
@@ -85,10 +84,10 @@ namespace NerdStore.WebApp.MVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(WebApplication app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -111,9 +110,12 @@ namespace NerdStore.WebApp.MVC
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Vitrine}/{action=Index}/{id?}");
+            });
         }
     }
 }
