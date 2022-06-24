@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.Catalogo.Data;
 using NerdStore.Vendas.Data;
@@ -18,9 +17,6 @@ namespace NerdStore.WebApp.MVC
     public class StartupApiTests : IStartup
     {
         public IConfiguration Configuration { get; }
-        private readonly string _apiName;
-        private readonly string _apiDescription;
-        private readonly string _apiVersion;
 
         public StartupApiTests(IWebHostEnvironment hostEnvironment)
         {
@@ -31,10 +27,6 @@ namespace NerdStore.WebApp.MVC
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-
-            _apiName = Configuration["ApiName"];
-            _apiDescription = Configuration["ApiDescription"];
-            _apiVersion = Configuration["ApiVersion"];
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -116,24 +108,20 @@ namespace NerdStore.WebApp.MVC
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            // Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint($"{_apiVersion}/swagger.json", $"{_apiName} {_apiVersion}");
-            });
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseDeveloperExceptionPage();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
