@@ -1,3 +1,4 @@
+using NerdStore.BDD.Tests.Config;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 
@@ -9,8 +10,15 @@ namespace NerdStore.BDD.Tests.Pedido
         [Given(@"Que um produto esteja na vitrine")]
         public void DadoQueUmProdutoEstejaNaVitrine()
         {
-            var browser = new ChromeDriver("C:\\WebDriver\\");
-            browser.Navigate().GoToUrl("https://desenvolvedor.io");
+            // Arrange
+            var browser = new SeleniumHelper(Browser.Chrome, new ConfigurationHelper(), false);
+            browser.IrParaUrl("https://desenvolvedor.io");
+            browser.ClicarLinkPorTexto("Entrar");
+            browser.PreencherTextBoxPorId("Email", "contato@teste.com");
+
+            // Act
+
+            // Assert
         }
 
         [Given(@"Esteja disponivel no estoque")]
