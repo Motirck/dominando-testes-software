@@ -1,26 +1,50 @@
+using NerdStore.BDD.Tests.Config;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace NerdStore.BDD.Tests.Usuario
 {
     [Binding]
+    [CollectionDefinition(nameof(AutomacaoWebFixtureCollection))]
     public class CadastroUsuariosStepDefinitions
     {
+        private readonly CadastroUsuarioTela _cadastroUsuarioTela;
+        private readonly AutomacaoWebTestsFixture _testsFixture;
+
+        public CadastroUsuariosStepDefinitions(AutomacaoWebTestsFixture testsFixture)
+        {
+            _testsFixture = testsFixture;
+            _cadastroUsuarioTela = new CadastroUsuarioTela(testsFixture.BrowserHelper);
+        }
+
         [When(@"Ele clicar em registrar")]
         public void QuandoEleClicarEmRegistrar()
         {
-            throw new PendingStepException();
+            // Act
+            _cadastroUsuarioTela.ClicarNoLinkRegistrar();
+
+            // Assert
+            Assert.Contains(_testsFixture.Configuration.RegisterUrl, _cadastroUsuarioTela.ObterUrl());
         }
 
         [When(@"Preencher os dados do formulario")]
         public void QuandoPreencherOsDadosDoFormulario(Table table)
         {
-            throw new PendingStepException();
+            // Arrange
+            _testsFixture.GerarDadosUsuario();
+            var usuario = _testsFixture.Usuario;
+
+            // Act
+            _cadastroUsuarioTela.PreencherFormularioRegistro(usuario);
+
+            // Assert
+            Assert.True(_cadastroUsuarioTela.ValidarPreenchimentoFormularioRegistro(usuario));
         }
 
         [When(@"Clicar no botão registrar")]
         public void QuandoClicarNoBotaoRegistrar()
         {
-            throw new PendingStepException();
+            _cadastroUsuarioTela.ClicarNoBotaoRegistrar();
         }
 
         [When(@"Preencher os dados do formulario com uma senha sem maiusculas")]
