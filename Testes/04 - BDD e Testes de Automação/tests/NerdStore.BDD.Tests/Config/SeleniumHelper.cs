@@ -46,6 +46,12 @@ namespace NerdStore.BDD.Tests.Config
             botao.Click();
         }
 
+        /// <summary>
+        /// Somente obter elemento por XPath se o mesmo não possuir "id", "name" ou outr a propriedade chave
+        /// pois caso o front-end seja alterado e seja adicionado por exemplo mais uma "div" o teste
+        /// irá falhar, tendo que ser refatorado.
+        /// </summary>
+        /// <param name="xPath"></param>
         public void ClicarPorXPath(string xPath)
         {
             var elemento = Wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xPath)));

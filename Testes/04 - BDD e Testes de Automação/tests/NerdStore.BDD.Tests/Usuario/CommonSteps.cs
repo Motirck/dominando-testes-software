@@ -1,26 +1,44 @@
-﻿using TechTalk.SpecFlow;
+﻿using NerdStore.BDD.Tests.Config;
+using TechTalk.SpecFlow;
+using Xunit;
 
 namespace NerdStore.BDD.Tests.Usuario
 {
     [Binding]
+    [CollectionDefinition(nameof(AutomacaoWebFixtureCollection))]
     public class CommonSteps
     {
+        private readonly CadastroUsuarioTela _cadastroUsuarioTela;
+        private readonly AutomacaoWebTestsFixture _testsFixture;
+
+        public CommonSteps(AutomacaoWebTestsFixture testsFixture)
+        {
+            _testsFixture = testsFixture;
+            _cadastroUsuarioTela = new CadastroUsuarioTela(testsFixture.BrowserHelper);
+        }
+
         [Given(@"Que o visitante está acessando o site da loja")]
         public void DadoQueOVisitanteEstaAcessandoOSiteDaLoja()
         {
-            throw new PendingStepException();
+            // Act
+            _cadastroUsuarioTela.AcessarSiteLoja();
+
+            // Assert
+            Assert.Contains(_testsFixture.Configuration.DomainUrl, _cadastroUsuarioTela.ObterUrl());
         }
 
         [Then(@"Ele será redirecionado para a vitrine")]
         public void EntaoEleSeraRedirecionadoParaAVitrine()
         {
-            throw new PendingStepException();
+            // Assert
+            Assert.Equal(_testsFixture.Configuration.VitrineUrl, _cadastroUsuarioTela.ObterUrl());
         }
 
         [Then(@"Uma saudação com seu e-mail será exibida no menu superior")]
         public void EntaoUmaSaudacaoComSeuE_MailSeraExibidaNoMenuSuperior()
         {
-            throw new PendingStepException();
+            // Assert
+            Assert.True(_cadastroUsuarioTela.ValidarSaudacaoUsuarioLogado(_testsFixture.Usuario));
         }
     }
 }
